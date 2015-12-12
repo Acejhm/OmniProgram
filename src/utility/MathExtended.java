@@ -130,6 +130,12 @@ public final class MathExtended
 		}
 		return gridPoints;
 	}
+	/**
+	 * 
+	 * @param k The number to increment each time, and the starting number.
+	 * @param n The number of times to sum.
+	 * @return double
+	 */
 	public static double summation(double k, int n)
 	{
 		double answer = 0;
