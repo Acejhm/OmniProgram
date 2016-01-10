@@ -5,9 +5,9 @@ package utility;
  */
 public class MathParser
 {	
-	@SuppressWarnings("null")
-	public static double parse(final String expression)
-	{	
-		return (Double) null;
+	public double evaluate(String equation)
+	{
+		
+		return 0;
 	}
 }

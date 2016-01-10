@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import applications.Calculator;
+import applications.ChatRoom;
+import applications.ChatServer;
+import applications.ColorChooser;
 import applications.Sorter;
 
 public class ApplicationPanel extends JPanel implements ActionListener
 {
-	JButton games, calculator, sorter, exit;
+	JButton games, calculator, sorter, exit, chooser, chat;
 	LauncherGUI launcher;
 	
 	public ApplicationPanel(LauncherGUI launcher)
@@ -22,14 +25,20 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		exit = new JButton("Exit");
 		sorter = new JButton("Sorter");
 		calculator = new JButton("Calculator");
+		chooser = new JButton("Color Chooser");
+		chat = new JButton("Chat Room");
 		
 		sorter.addActionListener(this);
 		calculator.addActionListener(this);
 		games.addActionListener(this);
 		exit.addActionListener(this);
+		chooser.addActionListener(this);
+		chat.addActionListener(this);
 		
-		add(sorter);
 		add(calculator);
+		add(chat);
+		add(chooser);
+		add(sorter);
 		add(games);
 		add(exit);
 	}
@@ -59,12 +68,21 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		}
 		else if(action.getSource() == sorter)
 		{
-			try {
+			try 
+			{
 				new Sorter();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+			} catch (FileNotFoundException e) 
+			{
 				e.printStackTrace();
 			}
+		}
+		else if(action.getSource() == chooser)
+		{
+			new ColorChooser();
+		}
+		else if(action.getSource() == chat)
+		{
+			new ChatRoom();
 		}
 	}
 }

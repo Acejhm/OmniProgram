@@ -1,63 +1,60 @@
-package launcher;
+package applications;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JColorChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * @author Jackson Murrell onClock Nov 7, 2015
+ * @author Jackson Murrell on Jan 1, 2016
  */
-public class Menu extends JMenuBar implements ActionListener
+public class ColorChooserMenu extends JMenuBar implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String MOTIF_LOOK_AND_FEEL = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
 	private static final String GTK_LOOK_AND_FEEL = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 	private static final String NIMBUS_LOOK_AND_FEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	
-	private LauncherGUI launcherGUI;
+	private ColorChooser chooser;
 	private ButtonGroup group;
-	private JMenuItem exit, onClock, offClock, onLabel, offLabel;
+	private JMenuItem exit, simplified, advanced;
 	
-	private JMenu file, settings, appearance, widgets, clock, text;
+	private JMenu file, settings, appearance;
 	private JRadioButtonMenuItem javaDefault, systemDefault, motif, gtk, nimbus;
 	
-	public Menu(LauncherGUI launcher, boolean widgetOn)
+	public ColorChooserMenu(ColorChooser chooser, boolean advancedOn)
 	{
-		launcherGUI = launcher;
+		this.chooser = chooser;
 		group = new ButtonGroup();
 		
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(this);
-		onClock = new JMenuItem("On");
-		onClock.addActionListener(this);
-		offClock = new JMenuItem("Off");
-		offClock.addActionListener(this);
-		onLabel = new JMenuItem("On");
-		onLabel.addActionListener(this);
-		offLabel = new JMenuItem("Off");
-		offLabel.addActionListener(this);
 		
-		if(widgetOn)
+		if(advancedOn)
 		{
-			onClock.setEnabled(false);
-			offClock.setEnabled(true);
-			onLabel.setEnabled(false);
-			offLabel.setEnabled(true);
+			advancedMode();
 		}
 		else
 		{
-			offClock.setEnabled(true);
-			onClock.setEnabled(false);
-			onLabel.setEnabled(true);
-			offLabel.setEnabled(false);
+			simplifiedMode();
 		}
 		appearance = new JMenu("Appearance");
 		file = new JMenu("File");
 		settings= new JMenu("Settings");
-		widgets = new JMenu("Widgets");
-		clock = new JMenu("Clock");
-		text = new JMenu("Text");
+		advanced = new JMenuItem("Advanced Mode");
+		simplified = new JMenuItem("Simplified Mode");
 		
 		javaDefault = new JRadioButtonMenuItem("Java Default (\"Metal\")");
 		javaDefault.setSelected(true);
@@ -77,6 +74,8 @@ public class Menu extends JMenuBar implements ActionListener
 		motif.addActionListener(this);
 		gtk.addActionListener(this);
 		nimbus.addActionListener(this);
+		advanced.addActionListener(this);
+		simplified.addActionListener(this);
 		
 		appearance.add(javaDefault);
 		appearance.add(systemDefault);
@@ -85,18 +84,37 @@ public class Menu extends JMenuBar implements ActionListener
 		appearance.add(motif);
 		appearance.add(nimbus);
 		
-		widgets.add(clock);
-		widgets.add(text);
-		text.add(onLabel);
-		text.add(offLabel);
-		clock.add(onClock);
-		clock.add(offClock);
 		file.add(exit);
+		settings.add(simplified);
+		settings.add(advanced);
 		settings.add(appearance);
-		settings.add(widgets);
 		
 		add(file);
 		add(settings);
+	}
+
+	/**
+	 * 
+	 * @return void
+	 */
+	private void simplifiedMode()
+	{
+		chooser.remove(chooser.advancedChooser);
+		chooser.add(chooser.mainPanel);
+		SwingUtilities.updateComponentTreeUI(chooser);
+        chooser.repaint();
+	}
+
+	/**
+	 * 
+	 * @return void
+	 */
+	private void advancedMode()
+	{
+		chooser.remove(chooser.mainPanel);
+		chooser.add(chooser.advancedChooser);
+		SwingUtilities.updateComponentTreeUI(chooser);
+        chooser.repaint();
 	}
 
 	/* (non-Javadoc)
@@ -111,8 +129,8 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 		        UIManager.setLookAndFeel(
 		        		UIManager.getCrossPlatformLookAndFeelClassName());
-		        SwingUtilities.updateComponentTreeUI(launcherGUI);
-		        launcherGUI.repaint();
+		        SwingUtilities.updateComponentTreeUI(chooser);
+		        chooser.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -136,8 +154,8 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 		        UIManager.setLookAndFeel(
 		        		UIManager.getSystemLookAndFeelClassName());
-		        SwingUtilities.updateComponentTreeUI(launcherGUI);
-		        launcherGUI.repaint();
+		        SwingUtilities.updateComponentTreeUI(chooser);
+		        chooser.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -160,8 +178,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(MOTIF_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(launcherGUI);
-		        launcherGUI.repaint();
+		        SwingUtilities.updateComponentTreeUI(chooser);
+		        chooser.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -184,8 +202,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(GTK_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(launcherGUI);
-		        launcherGUI.repaint();
+		        SwingUtilities.updateComponentTreeUI(chooser);
+		        chooser.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -208,8 +226,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(NIMBUS_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(launcherGUI);
-		        launcherGUI.repaint();
+		        SwingUtilities.updateComponentTreeUI(chooser);
+		        chooser.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -237,32 +255,16 @@ public class Menu extends JMenuBar implements ActionListener
 			}
 			else if(option == JOptionPane.NO_OPTION)
 			{
-				launcherGUI.dispose();
+				chooser.dispose();
 			}
 		}
-		else if(action.getSource() == onClock)
+		else if(action.getSource() == advanced)
 		{
-			launcherGUI.addClock();
-			onClock.setEnabled(false);
-			offClock.setEnabled(true);
+			advancedMode();
 		}
-		else if(action.getSource() == offClock)
+		else if(action.getSource() == simplified)
 		{
-			launcherGUI.removeClock();
-			offClock.setEnabled(false);
-			onClock.setEnabled(true);
-		}
-		else if(action.getSource() == onLabel)
-		{
-			launcherGUI.addLabel();
-			offLabel.setEnabled(false);
-			onLabel.setEnabled(true);
-		}
-		else if(action.getSource() == offLabel)
-		{
-			launcherGUI.removeLabel();
-			offLabel.setEnabled(false);
-			onLabel.setEnabled(true);
+			simplifiedMode();
 		}
 	}
 }

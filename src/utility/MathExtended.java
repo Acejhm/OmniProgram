@@ -37,13 +37,13 @@ public final class MathExtended
 		return output;
 	}
 	/**
-	 * 
+	 * Used internally
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
 	 * @return double
 	 */
-	public static double deltaX(double a, double b, int n)
+	private static double deltaX(double a, double b, int n)
 	{
 		return (b-a)/n;
 	}
@@ -114,13 +114,13 @@ public final class MathExtended
 		return answer;
 	}
 	/**
-	 * 
+	 * Used internally
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
 	 * @return double
 	 */
-	public static double[] gridPoints(double a, double b, int n)
+	private static double[] gridPoints(double a, double b, int n)
 	{
 		double deltaX = deltaX(a,b,n);
 		double[] gridPoints = new double[n+1];
@@ -157,5 +157,61 @@ public final class MathExtended
 	public static double equation(double x)
 	{
 		return (x+1);
+	}
+	/**
+	 * Currently broken
+	 * @param redValue
+	 * @param blueValue
+	 * @param greenValue
+	 * @return String
+	 */
+	public static String convertRGBtoHexadecimal(short redValue, short blueValue, short greenValue)
+	{
+		StringBuilder string = new StringBuilder();
+		final byte BASE_NUMBER = 16;
+		int array[] = {redValue, greenValue, blueValue};
+		int value;
+		
+		for(int i = 0; i < 3; i++)
+		{ 
+			value = array[i] - ((array[i]/BASE_NUMBER)*(BASE_NUMBER*10));
+			
+			if(value <= 9 && value >= 0)
+			{
+				string.append(value);
+			}
+			else
+			{
+				switch(value)
+				{
+				case 10: string.append('A'); break;
+				case 11: string.append('B'); break;
+				case 12: string.append('C'); break;
+				case 13: string.append('D'); break;
+				case 14: string.append('E'); break;
+				case 15: string.append('F'); break;
+				}
+			}
+			value = value - ((value/BASE_NUMBER)*(BASE_NUMBER*10));
+			
+			if(value <= 9 && value >= 0)
+			{
+				string.append(value);
+			}
+			else
+			{
+				switch(value)
+				{
+				case 10: string.append('A'); break;
+				case 11: string.append('B'); break;
+				case 12: string.append('C'); break;
+				case 13: string.append('D'); break;
+				case 14: string.append('E'); break;
+				case 15: string.append('F'); break;
+				}
+			}
+		}
+		
+		return string.toString();
 	}
 }
