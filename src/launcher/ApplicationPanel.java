@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import applications.Calculator;
 import applications.ChatRoom;
-import applications.ChatServer;
 import applications.ColorChooser;
 import applications.Sorter;
 
