@@ -33,7 +33,6 @@ public class LauncherGUI extends JFrame
 	{
 		setTitle("Omni-Program Launcher");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        addWindowListener(new WindowListener());
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         
