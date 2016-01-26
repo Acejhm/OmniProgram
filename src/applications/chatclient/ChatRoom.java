@@ -1,4 +1,4 @@
-package applications;
+package applications.chatclient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,10 +28,10 @@ public class ChatRoom extends JFrame implements ActionListener
 	private static final short	WINDOW_LENGTH	= 400;
 	private static final short	WINDOW_WIDTH	= 400;
 	private static final String	TITLE			= "Chat Room";
-	private static final short PORT = 8000;
-	private static final byte INPUT_COLUMNS = 10;
-	private static final byte TEXT_COLUMNS = 10;
-	private static final byte TEXT_ROWS = 10;
+	private static final short PORT 			= 8000;
+	private static final byte INPUT_COLUMNS 	= 10;
+	private static final byte TEXT_COLUMNS 		= 10;
+	private static final byte TEXT_ROWS 		= 10;
 
 	public ChatRoom()
 	{

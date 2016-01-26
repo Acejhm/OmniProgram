@@ -10,6 +10,7 @@ public class LinkedList <T extends Comparable>
 {
 	//Class-wide variables such as the head node reference
 	//and the amount of items in the list.
+	@SuppressWarnings("rawtypes")
 	private Node head;
 	private int listCount;
 	
@@ -17,6 +18,7 @@ public class LinkedList <T extends Comparable>
 	 * Constructor which creates the head node with no initial data.
 	 * The listCount is set to 0.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LinkedList()
 	{
 		head = new Node(null);
@@ -27,6 +29,7 @@ public class LinkedList <T extends Comparable>
 	 * The listCount is set to 1.
 	 * @param input The data to store in the head node.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LinkedList(T input)
 	{
 		head = new Node(input);
@@ -90,10 +93,10 @@ public class LinkedList <T extends Comparable>
 	}
 	/**
 	 * Removes the node at the specified list element.
-	 * @return boolean Whether or not the node was removed successfully.
 	 * @param index The target node to remove.
-	 * @return
+	 * @return boolean Whether or not the node was removed successfully.
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean removeAt(int index)
 	{
 		Node current = iterate(index);
@@ -114,6 +117,11 @@ public class LinkedList <T extends Comparable>
 		listCount--;
 		return true;
 	}
+	/**
+	 * Will remove the first node it finds containing the specified value of type T.
+	 * @param value The value to search for.
+	 * @return boolean Whether or not the value was removed successfully.
+	 */
 	public boolean removeValue(T value)
 	{
 		Node current = iterate(value);
@@ -132,7 +140,6 @@ public class LinkedList <T extends Comparable>
 		head.setNext(null);
 	}
 	/**
-	 * 
 	 * @return int The size of the LinkedList.
 	 */
 	public int size()

@@ -11,8 +11,8 @@ import java.net.UnknownHostException;
  */
 public class ChatClient implements Runnable
 {
-	private static final String HOST = "localhost";
-	private static final short PORT = 1337;
+	private String hostName = "192.168.1.108";
+	private short portNumber = 1337;
 	private static boolean exit = false;
 	
 	Thread inputThread, outputThread;
@@ -21,9 +21,12 @@ public class ChatClient implements Runnable
 	DataOutputStream output;
 	ChatRoom room;
 	
-	public ChatClient(ChatRoom room)
+	public ChatClient(ChatRoom room, String hostName, short portNumber)
 	{
 		this.room = room;
+		this.hostName = hostName;
+		this.portNumber = portNumber;
+		Thread
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -33,7 +36,7 @@ public class ChatClient implements Runnable
 	{
 		try
 		{
-			socket = new Socket(HOST, PORT);
+			socket = new Socket(hostName, portNumber);
 			System.out.println("Connected");
 			output = new DataOutputStream(socket.getOutputStream());
 			input = new DataInputStream(socket.getInputStream());
@@ -45,7 +48,7 @@ public class ChatClient implements Runnable
 		}
 		catch (UnknownHostException e)
 		{
-			System.out.println("Unable to connect to host: " + HOST);
+			System.out.println("Unable to connect to host: " + hostName);
 			e.printStackTrace();
 		} 
 		catch (IOException e)
