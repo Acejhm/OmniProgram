@@ -1,4 +1,4 @@
-package utility;
+package utility.dataStorage;
 
 /**
  * This is a custom implementation of a LinkedList.

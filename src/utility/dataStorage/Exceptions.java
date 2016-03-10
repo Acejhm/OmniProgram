@@ -1,11 +1,4 @@
-package utility;
-
-/**
-   These two classes represent exceptions
-   thrown by the queue methods.
-*/
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+package utility.dataStorage;
 
 /**
  * 
@@ -41,6 +34,8 @@ class EmptyQueueException extends RuntimeException
  */
 class EmptyStackException extends RuntimeException
 {     
+	private static final long serialVersionUID = -5177094122437368003L;
+
 	public EmptyStackException()
 	{
 		super("There is nothing in the stack to pop.");
@@ -48,6 +43,8 @@ class EmptyStackException extends RuntimeException
 }
 class ParserException extends IllegalArgumentException
 {
+	private static final long serialVersionUID = 883194048637454680L;
+
 	public ParserException()
 	{
 		super("Parser received an invalid value.");

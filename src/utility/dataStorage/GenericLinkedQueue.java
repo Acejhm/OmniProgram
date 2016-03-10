@@ -1,4 +1,4 @@
-package utility;
+package utility.dataStorage;
 
 /**
  * @author Jackson Murrell on Dec 8, 2015
@@ -46,18 +46,6 @@ public class GenericLinkedQueue <T>
 			last = new Node<T>(value);
 			first = last;
 		}
-		size++;
-	}
-	/**
-	 * This will allow you to "cut" in line by adding a value directly to the front of the queue.
-	 * @param value
-	 * @return void
-	 */
-	public void priorityEnqueue(T value)
-	{
-		Node<T> temp = new Node<T>(value, first);
-		temp.setNext(first);
-		first = temp;
 		size++;
 	}
 	public void enqueueArray(T[] array)
