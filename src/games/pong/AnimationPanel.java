@@ -89,8 +89,17 @@ public class AnimationPanel extends JPanel
     public void gameOver()
     {
     	timer.stop();
-        JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
-        frame.dispose();
+    	if(GlobalUtility.replayQuery(this) == true)
+    	{
+    		this.frame.dispose();
+    		new PongMainGUI();
+    	}
+    	else
+    	{
+    		JOptionPane.showMessageDialog(this, "Exiting...");
+    		this.frame.dispose();
+    	}
+        
     }
 
 }
