@@ -38,7 +38,9 @@ public class ChatServer extends Thread
              DataOutputStream output = new DataOutputStream(server.getOutputStream());
            while(keepRunning  == true)
            { 
-               output.writeUTF(input.readUTF());
+        	   String message = input.readUTF();
+        	   System.out.println(message);
+               output.writeUTF(message);
            }
            server.close();
         }catch(SocketTimeoutException exception)

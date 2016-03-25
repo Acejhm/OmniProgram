@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import games.adventure.gui.CharacterSetupGUI;
 import games.pong.AnimationPanel;
@@ -42,13 +43,13 @@ public class GamePanel extends JPanel implements ActionListener
 		if(action.getSource() == pong)
 		{
 			launcher.setVisible(false);
-			try 
+			SwingUtilities.invokeLater(new Runnable()
 			{
-				PongMainGUI.main(null);
-			} catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
+			      public void run()
+			      {
+			         new PongMainGUI();
+			      }
+			 });
 			launcher.setVisible(true);
 		}
 		else if(action.getSource() == adventure)

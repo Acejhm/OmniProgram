@@ -18,7 +18,6 @@ import games.adventure.enemies.Enemies;
  * 
  * @version 0.1
  * @author Jackson Murrell
- * @author J. L. Finley
  */
 public class Player 
 {
