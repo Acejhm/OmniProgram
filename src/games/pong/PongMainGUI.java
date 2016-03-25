@@ -100,8 +100,8 @@ public class PongMainGUI extends JFrame implements ActionListener
     		animationPanel = new AnimationPanel(this, animationSpeed, progressiveBool);
     		add(animationPanel);
     		animationPanel.setFocusable(true);
+    		animationPanel.requestFocus();
     		setVisible(true);
-    		
     	}
     	else if(action.getSource() == easy)
 		{
@@ -125,14 +125,4 @@ public class PongMainGUI extends JFrame implements ActionListener
 			dispose();
 		}
 	}
-    public static void main(String args[]) throws InterruptedException
-    {
-    	SwingUtilities.invokeLater(new Runnable()
-    	{
-    	      public void run()
-    	      {
-    	         new PongMainGUI();
-    	      }
-    	   });
-    }
-}
+}    
