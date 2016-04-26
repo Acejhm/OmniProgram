@@ -1,4 +1,4 @@
-package applications;
+package applications.chatclient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,7 +26,7 @@ public class ChatClient implements Runnable
 		this.room = room;
 		this.hostName = hostName;
 		this.portNumber = portNumber;
-		Thread
+		//Thread
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()

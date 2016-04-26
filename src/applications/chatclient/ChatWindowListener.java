@@ -1,4 +1,4 @@
-package applications;
+package applications.chatclient;
 
 import java.awt.event.WindowAdapter;
 

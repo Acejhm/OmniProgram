@@ -40,7 +40,7 @@ public class ChatRoom extends JFrame implements ActionListener
 		setSize(WINDOW_WIDTH, WINDOW_LENGTH);
 		addWindowListener(new ChatWindowListener(this));
 
-		client = new ChatClient(this);
+		//client = new ChatClient(this);
 		
 		mainPanel = new JPanel();
 		textPanel = new JPanel();

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import applications.Calculator;
-import applications.ChatRoom;
 import applications.ColorChooser;
 import applications.Sorter;
 
@@ -81,7 +80,7 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		}
 		else if(action.getSource() == chat)
 		{
-			new ChatRoom();
+			//new ChatRoom();
 		}
 	}
 }

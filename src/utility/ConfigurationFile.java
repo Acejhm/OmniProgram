@@ -36,20 +36,20 @@ public class ConfigurationFile
 	 * @return byte 1 if the given property is true, 0 if it's false, 
 	 * 				and -1 if it wasn't found.
 	 */
-	public byte getProperty(String propertyName)
-	{
-		try
-		{
-			BinarySearch.threadedBinarySearch(filePath, value, configFile, ignoreCase)h();
-		} catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}
+//	public byte getProperty(String propertyName)
+//	{
+//		try
+//		{
+//			BinarySearch.binarySearch(filePath, value, configFile, ignoreCase);
+//		} catch (FileNotFoundException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return 0;
+//	}
 }
