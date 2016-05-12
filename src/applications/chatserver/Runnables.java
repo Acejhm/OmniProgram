@@ -24,19 +24,19 @@ class InputRunnable implements Runnable
 	@Override
 	public void run()
 	{
-		try
-		{
-			input = new DataInputStream(socket.getInputStream());
-			
-			while(keepRunning  == true)
-			{ 
-				input.readUTF();
-			}	
-		}
-		catch(IOException e)
-		{
-    		e.printStackTrace();
-	    }
+//		try
+//		{
+//			//input = new DataInputStream(socket.getInputStream());
+//			
+//			//while(keepRunning  == true)
+//			{ 
+//			//	input.readUTF();
+//			}	
+//		}
+//		//catch(IOException e)
+//		{
+//    	//	e.printStackTrace();
+//	    }
 	}
 }
 class OutputRunnable implements Runnable
@@ -54,17 +54,17 @@ class OutputRunnable implements Runnable
 	@Override
 	public void run()
 	{
-		try
-		{
-			output = new DataOutputStream(socket.getOutputStream());
-			while(keepRunning  == true)
-			{ 
-				output.writeUTF("");
-			}	
-		}
-		catch(IOException e)
-		{
-    		e.printStackTrace();
-	    }
+//		try
+//		{
+//			output = new DataOutputStream(socket.getOutputStream());
+//			while(keepRunning  == true)
+//			{ 
+//				output.writeUTF("");
+//			}	
+//		}
+//		catch(IOException e)
+//		{
+//    		e.printStackTrace();
+//	    }
 	}
 }

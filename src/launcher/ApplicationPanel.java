@@ -9,11 +9,12 @@ import javax.swing.*;
 
 import applications.Calculator;
 import applications.ColorChooser;
+import applications.ComputerSpecs;
 import applications.Sorter;
 
 public class ApplicationPanel extends JPanel implements ActionListener
 {
-	JButton games, calculator, sorter, exit, chooser, chat;
+	JButton games, calculator, sorter, exit, chooser, chat, specs;
 	LauncherGUI launcher;
 	
 	public ApplicationPanel(LauncherGUI launcher)
@@ -25,6 +26,7 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		calculator = new JButton("Calculator");
 		chooser = new JButton("Color Chooser");
 		chat = new JButton("Chat Room");
+		specs = new JButton("Computer Specifications");
 		
 		sorter.addActionListener(this);
 		calculator.addActionListener(this);
@@ -32,10 +34,12 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		exit.addActionListener(this);
 		chooser.addActionListener(this);
 		chat.addActionListener(this);
+		specs.addActionListener(this);
 		
 		add(calculator);
 		add(chat);
 		add(chooser);
+		add(specs);
 		add(sorter);
 		add(games);
 		add(exit);
@@ -78,9 +82,10 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		{
 			new ColorChooser();
 		}
-		else if(action.getSource() == chat)
+		else if(action.getSource() == specs)
 		{
-			//new ChatRoom();
+			//System.getProperties().list(System.out);
+			new ComputerSpecs();
 		}
 	}
 }

@@ -4,17 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Calendar;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
+import javax.swing.*;
+import launcher.menus.LauncherMenu;
+import launcher.menus.Menu;
 
 public class LauncherGUI extends JFrame
 {
@@ -27,7 +24,7 @@ public class LauncherGUI extends JFrame
 	private final short WINDOW_HEIGHT = 300;
 	private final short WINDOW_WIDTH = 750;
 	
-	private Thread thread;
+	private Timer timer;
 	
 	public LauncherGUI(boolean applicationDefault, boolean widgetsOn)
 	{
@@ -63,7 +60,7 @@ public class LauncherGUI extends JFrame
         if(widgetsOn)
         	addClock();
 
-        setJMenuBar(new Menu(this, true));
+       setJMenuBar(new LauncherMenu(this, true));
         
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
@@ -95,13 +92,22 @@ public class LauncherGUI extends JFrame
 	public void addClock()
 	{
 		mainPanel.add(clockPanel);
-		thread = new Thread(new ClockRunnable(clock));
-		thread.start();
+		timer = new Timer(500, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				calendar = calendar.getInstance();
+				clock.setText("" + calendar.getTime());
+				clock.repaint();
+			}
+		});
+		timer.start();
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	public void removeClock()
 	{
-		thread.interrupt();
+		timer.stop();
 		mainPanel.remove(clockPanel);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
@@ -124,6 +130,12 @@ public class LauncherGUI extends JFrame
 		mainPanel.remove(textPanel);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
+	@Override
+	public void dispose() 
+	{
+		timer.stop();
+		super.dispose();
+	}
 	public static void main(String[] args)
 	{
 		SwingUtilities.invokeLater(new Runnable()
@@ -131,6 +143,7 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void run() 
 			{
+				System.getProperties().list(System.out);
 				new LauncherGUI(true, true);
 			}
 		});

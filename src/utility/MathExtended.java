@@ -7,7 +7,17 @@ import java.util.ArrayList;
  */
 public final class MathExtended
 {
-	final char PI_SYMBOL = '\u03C0';
+	final static char PI_SYMBOL = '\u03C0';
+	final static double BYTE_CONVERION = 1024.0;
+	/**
+	 * Converts the given value of bytes into Gigabytes.
+	 * @param bytes
+	 * @return int1`	
+	 */
+	public static float bytesToGB(long bytes)
+	{
+		return (float)(((bytes/BYTE_CONVERION)/BYTE_CONVERION)/BYTE_CONVERION);	
+	}
 	public static boolean isPrime(int input)
 	{
 		int divisor = 2;
