@@ -38,7 +38,7 @@ public class ComputerSpecs extends JFrame
 		os = new JLabel("Operating System: " + System.getProperties().getProperty("os.name"));
 		processors = new JLabel("Number of Processor: " + Runtime.getRuntime().availableProcessors());
 		ram = new JLabel("Available RAM: " + formatter.format(MathExtended.bytesToGB(Runtime.getRuntime().totalMemory())));
-		javaVersion = new JLabel("Java Version: " + System.getProperties().getProperty("java.version"));
+		//javaVersion = new JLabel("Java Version: " + );
 		drives = new JLabel[ROOTS.length];
 		
 		for(int i = 0; i < ROOTS.length; i++)

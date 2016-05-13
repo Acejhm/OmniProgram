@@ -27,9 +27,9 @@ public class Menu extends JMenuBar implements ActionListener
 	
 	protected JFrame frame;
 	protected ButtonGroup group;
-	protected JMenuItem exit;
+	protected JMenuItem exit, info;
 	
-	protected JMenu file, settings, appearance;
+	protected JMenu file, settings, appearance, help;
 	protected JRadioButtonMenuItem javaDefault, systemDefault, motif, gtk, nimbus;
 	
 	public Menu(JFrame frame)
@@ -39,6 +39,12 @@ public class Menu extends JMenuBar implements ActionListener
 		
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(this);
+		
+		info = new JMenuItem("Info");
+		info.addActionListener(this);
+		
+		help = new JMenu("Help");
+		help.addActionListener(this);
 		
 		appearance = new JMenu("Appearance");
 		file = new JMenu("File");
@@ -72,9 +78,11 @@ public class Menu extends JMenuBar implements ActionListener
 		
 		file.add(exit);
 		settings.add(appearance);
+		help.add(info);
 		
 		add(file);
 		add(settings);
+		add(help);
 	}
 
 	/* (non-Javadoc)
@@ -217,6 +225,10 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 				frame.dispose();
 			}
+		}
+		else if(action.getSource() == info)
+		{
+			JOptionPane.showMessageDialog(this, null, "Java Version: " + System.getProperties().getProperty("java.version"), JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
