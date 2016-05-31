@@ -1,39 +1,18 @@
 package applications;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import javax.swing.JOptionPane;
-
-import utility.MathExtended;
-import utility.MathParser;
-import utility.dataStorage.GenericLinkedQueue;
-import utility.dataStorage.PriorityGenericQueue;
+import utility.equationparser.MathParser;
 
 public class Calculator 
 {
-	public static void main(String[] args)
+	public Calculator() throws IOException
 	{
-		
-		PriorityGenericQueue<Integer> queue = new PriorityGenericQueue<Integer>();
-		
-		System.out.println("Queueing 0, priority 0");
-		queue.enqueue(0, 0);
-		System.out.println("Queueing 1, priority 1");
-		queue.enqueue(1, 1);
-		queue.printQueue();
-		System.out.println("Queueing -1, priority -1");
-		queue.enqueue(-1, -1);
-		queue.printQueue();
-		System.out.println("Queueing 2, priority 2");
-		queue.enqueue(2, 2);
-		queue.printQueue();
-		System.out.println("Queueing 3, priority 1");
-		queue.enqueue(1, 3);
-		queue.printQueue();
-		System.out.println("Queueing 4, priority 0");
-		queue.enqueue(0, 4);
-		queue.printQueue();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				
+		System.out.println("Built string: " + MathParser.evaluate(reader.readLine()));
 		
 	}
 }

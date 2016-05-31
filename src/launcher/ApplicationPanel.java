@@ -3,6 +3,7 @@ package launcher;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -66,7 +67,14 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		}
 		else if(action.getSource() == calculator)
 		{	
-			new Calculator();
+			try
+			{
+				new Calculator();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if(action.getSource() == sorter)
 		{
