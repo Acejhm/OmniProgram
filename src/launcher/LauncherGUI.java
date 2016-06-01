@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 import javax.swing.*;
 import launcher.menus.LauncherMenu;
-import launcher.menus.Menu;
+import utility.BaseMenu;
 
 public class LauncherGUI extends JFrame
 {

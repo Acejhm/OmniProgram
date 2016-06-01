@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 
-import launcher.menus.Menu;
+import utility.BaseMenu;
 import utility.MathExtended;
 
 /**
@@ -22,7 +22,7 @@ public class ComputerSpecs extends JFrame
 	
 	private DecimalFormat formatter;
 	
-	private JLabel os, ram, javaVersion, processors;
+	private JLabel os, ram, javaVersion, processors, username;
 	private JLabel[] drives;
 	private JPanel mainPanel;
 	
@@ -38,7 +38,9 @@ public class ComputerSpecs extends JFrame
 		os = new JLabel("Operating System: " + System.getProperties().getProperty("os.name"));
 		processors = new JLabel("Number of Processor: " + Runtime.getRuntime().availableProcessors());
 		ram = new JLabel("Available RAM: " + formatter.format(MathExtended.bytesToGB(Runtime.getRuntime().totalMemory())));
-		//javaVersion = new JLabel("Java Version: " + );
+		javaVersion = new JLabel("Java Version: " + System.getProperty("java.version"));
+		username = new JLabel("Username: " + System.getProperty("user.name"));
+		
 		drives = new JLabel[ROOTS.length];
 		
 		for(int i = 0; i < ROOTS.length; i++)
@@ -46,10 +48,11 @@ public class ComputerSpecs extends JFrame
 			drives[i] = new JLabel("Drive " + ROOTS[i].getPath() + "'s Free Memory: "
 						+ formatter.format(MathExtended.bytesToGB(ROOTS[i].getFreeSpace())) + "GB");
 		}
+		mainPanel.add(username);
 		mainPanel.add(os);
+		mainPanel.add(javaVersion);
 		mainPanel.add(processors);
 		mainPanel.add(ram);
-		mainPanel.add(javaVersion);
 		for(JLabel label: drives)
 		{
 			mainPanel.add(label);
@@ -58,7 +61,7 @@ public class ComputerSpecs extends JFrame
 		
 		add(mainPanel);
 		
-		setJMenuBar(new Menu(this));
+		setJMenuBar(new BaseMenu(this));
 		
 		setVisible(true);
 	}

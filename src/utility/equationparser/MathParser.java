@@ -9,7 +9,12 @@ import utility.dataStorage.PriorityGenericQueue;
  */
 public class MathParser
 {
-	private static final char WHITE_SPACE = ' ';
+	private static final char WHITE_SPACE = ' ', LEFT_PARENTHESIS = '(', RIGHT_PARENTHESIS = ')';
+	
+	//Initialize with some value so it can be used.
+	//It gets changed in evaluate later.
+	private static char variableToken = 0;
+	
 	private enum FunctionTokens
 	{
 		sin, cos, tan, cot, sec, csc
@@ -19,34 +24,76 @@ public class MathParser
 	 * @param equation
 	 * @return double
 	 */
-	public static String evaluate(String equation)
+	public static String evaluate(String equation, char variable)
 	{
-		return eatWhiteSpace(equation);
+		variableToken = variable;
+		String newEquation = eatWhiteSpace(equation);
+		System.out.println("Built string: " + newEquation);
+		System.out.println("Complexity: " + complexity(newEquation));
+		//queueForSolving(newEquation, complexity(newEquation));
+		return equation;
+	}
+	/**
+	 * @return int
+	 */
+	private static int complexity(String equation)
+	{
+		final int LENGTH = equation.length();
+		int leftCount = 0, rightCount = 0, complexity = 0, index = 0;
+		char character;
+		
+		while(index < LENGTH)
+		{
+			character = equation.charAt(index);
+			switch(character)
+			{
+			case LEFT_PARENTHESIS:
+			{
+				leftCount++;
+				if(leftCount > rightCount)
+					complexity++;
+				break;
+			}
+			case RIGHT_PARENTHESIS:
+			{
+				rightCount++;
+				break;
+			}
+				
+			}
+			index++;
+		}
+		return complexity;
 	}
 	/**
 	 * 
 	 * @param equation
 	 * @return PriorityQueue<String>
 	 */
-	private PriorityGenericQueue<String> tokenize(String equation)
+	private static PriorityGenericQueue<Character> queueForSolving(String equation, int complexity)
 	{
-		PriorityGenericQueue<String> queue = new PriorityGenericQueue<String>();
+		PriorityGenericQueue<Character> queue = new PriorityGenericQueue<Character>();
+		
+		int priority = complexity;
 		
 		char character;
 		int index = 0;
+		final int LENGTH = equation.length();
 		
-		while(index < equation.length())
+		while(index < LENGTH)
 		{
 			character = equation.charAt(index);
 			switch(character)
 			{
 			case '(': 
 			{
+				index++;
 				while(character != ')')
 				{
 					character = equation.charAt(index);
-					
+					queue.enqueue(complexity, character);
 					index++;
+					
 				}
 			}
 			}

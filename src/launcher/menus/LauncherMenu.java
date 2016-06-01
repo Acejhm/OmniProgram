@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import launcher.LauncherGUI;
+import utility.BaseMenu;
 
 /**
  * @author Jackson Murrell onClock Nov 7, 2015
  */
-public class LauncherMenu extends Menu implements ActionListener
+public class LauncherMenu extends BaseMenu implements ActionListener
 {
 	private JMenuItem onClock, offClock, onLabel, offLabel;
 	private JMenu widgets, clock, text;
@@ -58,12 +59,8 @@ public class LauncherMenu extends Menu implements ActionListener
 		clock.add(offClock);
 		settings.add(widgets);
 	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	@Override
-	public void actionPerformed(ActionEvent action)
+	public void customActions(ActionEvent action)
 	{
 		if(action.getSource() == onClock)
 		{
@@ -89,5 +86,9 @@ public class LauncherMenu extends Menu implements ActionListener
 			offLabel.setEnabled(false);
 			onLabel.setEnabled(true);
 		}
+	}
+	public void showHelpMenu()
+	{
+		JOptionPane.showMessageDialog(parentFrame, "Select the program you would like to launch.  It will open in a new window.\nJava version: " + System.getProperty("java.version"));
 	}
 }

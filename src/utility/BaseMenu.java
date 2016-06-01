@@ -1,4 +1,4 @@
-package launcher.menus;
+package utility;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,22 +19,24 @@ import launcher.LauncherGUI;
 /**
  * @author Jackson Murrell on May 11, 2016
  */
-public class Menu extends JMenuBar implements ActionListener
+@SuppressWarnings("serial")
+public class BaseMenu extends JMenuBar implements ActionListener
 {
 	protected static final String MOTIF_LOOK_AND_FEEL = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
 	protected static final String GTK_LOOK_AND_FEEL = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 	protected static final String NIMBUS_LOOK_AND_FEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	
-	protected JFrame frame;
+	protected JFrame parentFrame;
 	protected ButtonGroup group;
 	protected JMenuItem exit, info;
 	
 	protected JMenu file, settings, appearance, help;
 	protected JRadioButtonMenuItem javaDefault, systemDefault, motif, gtk, nimbus;
 	
-	public Menu(JFrame frame)
+	public BaseMenu(JFrame frame)
 	{
-		this.frame = frame;
+		System.out.println("Inside BaseMenu Constructor");
+		this.parentFrame = frame;
 		group = new ButtonGroup();
 		
 		exit = new JMenuItem("Exit");
@@ -91,14 +93,15 @@ public class Menu extends JMenuBar implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent action)
 	{
+		System.out.println("Inside baseMenu ActionListener");
 		if(action.getSource() == javaDefault)
 		{
 			try 
 			{
 		        UIManager.setLookAndFeel(
 		        		UIManager.getCrossPlatformLookAndFeelClassName());
-		        SwingUtilities.updateComponentTreeUI(frame);
-		        frame.repaint();
+		        SwingUtilities.updateComponentTreeUI(parentFrame);
+		        parentFrame.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -122,8 +125,8 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 		        UIManager.setLookAndFeel(
 		        		UIManager.getSystemLookAndFeelClassName());
-		        SwingUtilities.updateComponentTreeUI(frame);
-		        frame.repaint();
+		        SwingUtilities.updateComponentTreeUI(parentFrame);
+		        parentFrame.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -146,8 +149,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(MOTIF_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(frame);
-		        frame.repaint();
+		        SwingUtilities.updateComponentTreeUI(parentFrame);
+		        parentFrame.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -170,8 +173,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(GTK_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(frame);
-		        frame.repaint();
+		        SwingUtilities.updateComponentTreeUI(parentFrame);
+		        parentFrame.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -194,8 +197,8 @@ public class Menu extends JMenuBar implements ActionListener
 			try 
 			{
 		        UIManager.setLookAndFeel(NIMBUS_LOOK_AND_FEEL);
-		        SwingUtilities.updateComponentTreeUI(frame);
-		        frame.repaint();
+		        SwingUtilities.updateComponentTreeUI(parentFrame);
+		        parentFrame.repaint();
 		    } 
 		    catch (UnsupportedLookAndFeelException e) 
 			{
@@ -223,12 +226,29 @@ public class Menu extends JMenuBar implements ActionListener
 			}
 			else if(option == JOptionPane.NO_OPTION)
 			{
-				frame.dispose();
+				parentFrame.dispose();
 			}
 		}
 		else if(action.getSource() == info)
 		{
-			JOptionPane.showMessageDialog(this, null, "Java Version: " + System.getProperties().getProperty("java.version"), JOptionPane.INFORMATION_MESSAGE);
+			showHelpMenu();
 		}
+		else
+			//Call any sub-class actions.
+			customActions(action);
 	}
+	/**
+	 * Child menu's should override this to add class-specific implementation.
+	 * @return void
+	 */
+	public void showHelpMenu()
+	{
+		JOptionPane.showMessageDialog(parentFrame, "Default help message.\nJava version: " + System.getProperty("java.version"));
+	}
+	/**
+	 * Child menu's should override this to add class-specific implementation.
+	 * @return void
+	 */
+	public void customActions(ActionEvent action)
+	{}
 }

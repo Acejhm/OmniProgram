@@ -12,7 +12,7 @@ public class Calculator
 	{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				
-		System.out.println("Built string: " + MathParser.evaluate(reader.readLine()));
+		MathParser.evaluate(reader.readLine(), 'x');
 		
 	}
 }
