@@ -24,6 +24,10 @@ public class PriorityGenericQueue <T>
 	{
 		return size;
 	}
+	public boolean isEmpty()
+	{
+		return (size == 0);
+	}
 	public void enqueue(int priority, T value)
 	{
 		if(last != null)
