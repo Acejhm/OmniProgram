@@ -97,7 +97,7 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				calendar = calendar.getInstance();
+				calendar = Calendar.getInstance();
 				clock.setText("" + calendar.getTime());
 				clock.repaint();
 			}
@@ -143,7 +143,6 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void run() 
 			{
-				System.getProperties().list(System.out);
 				new LauncherGUI(true, true);
 			}
 		});

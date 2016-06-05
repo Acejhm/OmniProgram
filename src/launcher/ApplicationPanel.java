@@ -92,7 +92,6 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		}
 		else if(action.getSource() == specs)
 		{
-			//System.getProperties().list(System.out);
 			new ComputerSpecs();
 		}
 	}

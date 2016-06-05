@@ -35,7 +35,6 @@ public class BaseMenu extends JMenuBar implements ActionListener
 	
 	public BaseMenu(JFrame frame)
 	{
-		System.out.println("Inside BaseMenu Constructor");
 		this.parentFrame = frame;
 		group = new ButtonGroup();
 		
