@@ -2,6 +2,9 @@ package utility;
 
 import java.util.ArrayList;
 
+import org.mariuszgromada.math.mxparser.Argument;
+import org.mariuszgromada.math.mxparser.Expression;
+
 /**
  * @author Jackson Murrell on Oct 16, 2015
  */
@@ -9,6 +12,7 @@ public final class MathExtended
 {
 	final static char PI_SYMBOL = '\u03C0';
 	final static double BYTE_CONVERION = 1024.0;
+	private static Expression equation = new Expression();
 	/**
 	 * Converts the given value of bytes into Gigabytes.
 	 * @param bytes
@@ -46,8 +50,12 @@ public final class MathExtended
 		while(divisor < input);
 		return output;
 	}
+	public static double arcLengthXAxis(String function, double a, double b)
+	{
+		return new Expression("int(sqrt(1+(" + function + ")^2)), x, a, b").calculate();
+	}
 	/**
-	 * Used internally
+	 * Used internally for Riemman Sums
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
@@ -159,14 +167,20 @@ public final class MathExtended
 		}
 		return answer;
 	}
+	public static void setEquation(String expression)
+	{
+		equation = new Expression(expression);
+	}
 	/**
 	 * @param d
 	 * @return
 	 * @return int
 	 */
-	public static double equation(double x)
+	private static double equation(double xValue)
 	{
-		return (x+1);
+		Argument x = new Argument("x", xValue);
+		equation = new Expression(equation.getExpressionString(), x);
+		return equation.calculate();
 	}
 	/**
 	 * Currently broken

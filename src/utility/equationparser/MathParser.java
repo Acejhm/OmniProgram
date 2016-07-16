@@ -1,7 +1,5 @@
 package utility.equationparser;
 
-import java.util.PriorityQueue;
-
 import utility.dataStorage.PriorityGenericQueue;
 
 /**
@@ -10,10 +8,6 @@ import utility.dataStorage.PriorityGenericQueue;
 public class MathParser
 {
 	private static final char WHITE_SPACE = ' ', LEFT_PARENTHESIS = '(', RIGHT_PARENTHESIS = ')';
-	
-	//Initialize with some value so it can be used.
-	//It gets changed in evaluate later.
-	private static char variableToken = 0;
 	
 	private enum FunctionTokens
 	{
@@ -26,11 +20,18 @@ public class MathParser
 	 */
 	public static String evaluate(String equation, char variable)
 	{
-		variableToken = variable;
+		
+		//variableToken = variable;
 		String newEquation = eatWhiteSpace(equation);
-		System.out.println("Built string: " + newEquation);
-		System.out.println("Complexity: " + complexity(newEquation));
-		//queueForSolving(newEquation, complexity(newEquation));
+		PriorityGenericQueue<Character> queue = queueForSolving(newEquation, complexity(newEquation));
+		
+		StringBuilder builder = new StringBuilder();
+		while(queue.getSize() != 0)
+		{
+			builder.append(queue.dequeue());
+		}
+		System.out.println("Queue for Solving String: " + builder.toString());
+		
 		return equation;
 	}
 	/**
@@ -59,11 +60,38 @@ public class MathParser
 				rightCount++;
 				break;
 			}
-				
 			}
 			index++;
 		}
 		return complexity;
+	}
+	private static void convertToPostFix(String equation)
+	{
+		PriorityGenericQueue<Character> queue = new PriorityGenericQueue<Character>();
+		char character = equation.charAt(0);
+		final byte BASE_PRIORITY = 0;
+		
+		for(int index = 0; index < equation.length(); index++)
+		{
+			switch(character)
+			{
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			{
+				queue.enqueue(character, BASE_PRIORITY);
+				break;
+			}
+			}
+		}
+		
 	}
 	/**
 	 * 
@@ -72,9 +100,8 @@ public class MathParser
 	 */
 	private static PriorityGenericQueue<Character> queueForSolving(String equation, int complexity)
 	{
-		PriorityGenericQueue<Character> queue = new PriorityGenericQueue<Character>();
 		
-		int priority = complexity;
+		final byte BASE_PRIORITY = 0;
 		
 		char character;
 		int index = 0;
@@ -83,22 +110,35 @@ public class MathParser
 		while(index < LENGTH)
 		{
 			character = equation.charAt(index);
+			//System.out.println("Character: " + character);
 			switch(character)
 			{
 			case '(': 
 			{
 				index++;
-				while(character != ')')
+				character = equation.charAt(index);
+				do
 				{
-					character = equation.charAt(index);
-					queue.enqueue(complexity, character);
+					System.out.println("Character in while: " + character + " Index: " + index);
+					System.out.println("Complexity value: " + complexity);
+					//queue.enqueue(character, complexity);
 					index++;
-					
+					character = equation.charAt(index);
 				}
+				while(character != ')');
+				complexity--;
+				break;
+			}
+			default: 
+			{
+				//queue.enqueue(equation.charAt(index), BASE_PRIORITY);
+				index++;
+				break;
 			}
 			}
 		}
-		return queue;
+		//return queue;
+		return null;
 	}
 	/**
 	 * This is simply a utility method that re-creates the given string

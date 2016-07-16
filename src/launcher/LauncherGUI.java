@@ -134,7 +134,17 @@ public class LauncherGUI extends JFrame
 	public void dispose() 
 	{
 		timer.stop();
-		super.dispose();
+		
+		byte option = (byte)JOptionPane.showConfirmDialog(this, "Exit all programs?", "Exit Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+		
+		if(option == JOptionPane.YES_OPTION)
+		{
+			System.exit(0);
+		}
+		else if(option == JOptionPane.NO_OPTION)
+		{
+			super.dispose();
+		}
 	}
 	public static void main(String[] args)
 	{
