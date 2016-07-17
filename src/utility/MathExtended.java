@@ -75,12 +75,8 @@ public final class MathExtended
 	public static double leftRiemannSum(double a, double b, int n)
 	{
 		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a,b,n);
 		double answer = 0;
-		for(int i = 0; i <= n; i++)
-		{
-			gridPoints[i] = a+(i*deltaX);
-		}
 		for(int i = 0; i < n; i++)
 		{
 			answer += deltaX*equation(gridPoints[i]);
@@ -125,14 +121,40 @@ public final class MathExtended
 	{
 		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
-		for(int i = 0; i < n; i++)
+		for(int i = 0; i <= n; i++)
 		{
-			if(i==0 || i==n-1)
+			if(i==0 || i==n)
 				answer += equation(gridPoints[i]);
 			else
 				answer += 2*equation(gridPoints[i]);
 		}
 		return (deltaX(a,b,n)*0.5)*answer;
+	}
+	/**
+	 * @param a
+	 * @param b
+	 * @param n
+	 * @return String
+	 */
+	public static double trapezoidErrorCheck(double a, double b, int n, String function)
+	{
+		double mValue;
+		Argument aArg = new Argument("x=" + a);
+		Argument bArg = new Argument("x=" + b);
+		
+		equation = new Expression("der(" + function + ", x)", aArg);
+		double aValue = equation.calculate();
+		equation = new Expression("der(" + function + ", x)", bArg);
+		double bValue = equation.calculate();
+		
+		if(aValue>bValue)
+			mValue = a;
+		else
+			mValue = b;
+		System.out.println("bValue: " + bValue);
+		System.out.println("aValue: " + aValue);
+		
+		return (Math.pow((b-a), 3)/(12*Math.pow(n,2)))*mValue;
 	}
 	public static double simpsonsSum(double a, double b, int n)
 	{
@@ -142,13 +164,13 @@ public final class MathExtended
 		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
 		boolean bool = true;
-		for(int i = 0; i < n; i++)
-		{
-			if(i==0 || i==n-1)
+		for(int i = 0; i <= n; i++)
+		{	System.out.println("Gridpoint " + i + ":" + gridPoints[i]);
+			if(i == 0 || i ==n)
 				answer += equation(gridPoints[i]);
 			else
 			{
-				if(bool)
+				if(bool == true)
 				{
 					answer += 4*equation(gridPoints[i]);
 					bool = false;
@@ -171,7 +193,9 @@ public final class MathExtended
 	 */
 	private static double[] gridPoints(double a, double b, int n)
 	{
+		System.out.println("a: " + a + " b: " + b + " n: " + n);
 		double deltaX = deltaX(a,b,n);
+		System.out.println("DeltaX: " + deltaX);
 		double[] gridPoints = new double[n+1];
 		for(int i = 0; i <= n; i++)
 		{
