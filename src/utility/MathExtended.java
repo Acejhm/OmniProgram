@@ -96,18 +96,13 @@ public final class MathExtended
 	 */
 	public static double rightRiemannSum(double a, double b, int n)
 	{
-		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
-		for(int i = 0; i <= n; i++)
-		{
-			gridPoints[i] = a+(i*deltaX);
-		}
 		for(int i = 1; i <= n; i++)
 		{
-			answer += deltaX*equation(gridPoints[i]);
+			answer += equation(gridPoints[i]);
 		}
-		return answer;
+		return deltaX(a,b,n)*answer;
 	}
 	/**
 	 * 
@@ -118,21 +113,57 @@ public final class MathExtended
 	 */
 	public static double midPointRiemannSum(double a, double b, int n)
 	{
-		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
-		for(int i = 0; i <= n; i++)
-		{
-			gridPoints[i] = a+(i*deltaX);
-		}
 		for(int i = 0; i < n; i++)
 		{
-			answer += deltaX*equation((gridPoints[i]+gridPoints[i+1])/2);
+			answer += equation((gridPoints[i]+gridPoints[i+1])/2);
 		}
-		return answer;
+		return deltaX(a,b,n)*answer;
+	}
+	public static double trapezoidSum(double a, double b, int n)
+	{
+		double[] gridPoints = gridPoints(a, b, n);
+		double answer = 0;
+		for(int i = 0; i < n; i++)
+		{
+			if(i==0 || i==n-1)
+				answer += equation(gridPoints[i]);
+			else
+				answer += 2*equation(gridPoints[i]);
+		}
+		return (deltaX(a,b,n)*0.5)*answer;
+	}
+	public static double simpsonsSum(double a, double b, int n)
+	{
+		if((n % 2)!= 0)
+			throw new NumberFormatException("The interval must be an even number for " +
+											"Simpson's Method.");
+		double[] gridPoints = gridPoints(a, b, n);
+		double answer = 0;
+		boolean bool = true;
+		for(int i = 0; i < n; i++)
+		{
+			if(i==0 || i==n-1)
+				answer += equation(gridPoints[i]);
+			else
+			{
+				if(bool)
+				{
+					answer += 4*equation(gridPoints[i]);
+					bool = false;
+				}
+				else
+				{
+					answer += 2*equation(gridPoints[i]);
+					bool = true;
+				}
+			}
+		};
+		return (deltaX(a,b,n)*(1.0/3))*answer;
 	}
 	/**
-	 * Used internally
+	 * Used internally to get the x-values for summations
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
