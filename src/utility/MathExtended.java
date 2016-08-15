@@ -130,32 +130,6 @@ public final class MathExtended
 		}
 		return (deltaX(a,b,n)*0.5)*answer;
 	}
-	/**
-	 * @param a
-	 * @param b
-	 * @param n
-	 * @return String
-	 */
-	public static double trapezoidErrorCheck(double a, double b, int n, String function)
-	{
-		double mValue;
-		Argument aArg = new Argument("x=" + a);
-		Argument bArg = new Argument("x=" + b);
-		
-		equation = new Expression("der(" + function + ", x)", aArg);
-		double aValue = equation.calculate();
-		equation = new Expression("der(" + function + ", x)", bArg);
-		double bValue = equation.calculate();
-		
-		if(aValue>bValue)
-			mValue = a;
-		else
-			mValue = b;
-		System.out.println("bValue: " + bValue);
-		System.out.println("aValue: " + aValue);
-		
-		return (Math.pow((b-a), 3)/(12*Math.pow(n,2)))*mValue;
-	}
 	public static double simpsonsSum(double a, double b, int n)
 	{
 		if((n % 2)!= 0)
