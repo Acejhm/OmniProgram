@@ -1,17 +1,22 @@
 package launcher;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.io.IOException;
 import java.util.Calendar;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
 import launcher.menus.LauncherMenu;
-import utility.BaseMenu;
+import utility.ReadConfig;
 
 public class LauncherGUI extends JFrame
 {
@@ -143,8 +148,17 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void run() 
 			{
-				System.getProperties().list(System.out);
-				new LauncherGUI(true, true);
+				try
+				{
+					ReadConfig reader = new ReadConfig();
+
+
+					new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
