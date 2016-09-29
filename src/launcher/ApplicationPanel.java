@@ -12,11 +12,10 @@ import applications.Calculator;
 import applications.ColorChooser;
 import applications.ComputerSpecs;
 import applications.Sorter;
-import applications.calculator.FormulaCalculator;
 
 public class ApplicationPanel extends JPanel implements ActionListener
 {
-	JButton games, calculator, sorter, exit, chooser, chat, specs, riemannSums;
+	JButton games, calculator, sorter, exit, chooser, chat, specs;
 	LauncherGUI launcher;
 	
 	public ApplicationPanel(LauncherGUI launcher)
@@ -29,7 +28,6 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		chooser = new JButton("Color Chooser");
 		chat = new JButton("Chat Room");
 		specs = new JButton("Computer Specifications");
-		riemannSums = new JButton("Formula Calculator");
 		
 		sorter.addActionListener(this);
 		calculator.addActionListener(this);
@@ -38,12 +36,10 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		chooser.addActionListener(this);
 		chat.addActionListener(this);
 		specs.addActionListener(this);
-		riemannSums.addActionListener(this);
 		
 		add(calculator);
 		add(chat);
 		add(chooser);
-		add(riemannSums);
 		add(specs);
 		add(sorter);
 		add(games);
@@ -93,10 +89,6 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		else if(action.getSource() == chooser)
 		{
 			new ColorChooser();
-		}
-		else if(action.getSource() == riemannSums)
-		{
-			new FormulaCalculator();
 		}
 		else if(action.getSource() == specs)
 		{
