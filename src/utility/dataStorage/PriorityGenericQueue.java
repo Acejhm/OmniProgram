@@ -1,10 +1,14 @@
 package utility.dataStorage;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 /**
  * @author Jackson Murrell on Mar 1, 2016
  */
 public class PriorityGenericQueue <T>
 {
+	private final byte BASE_PRIORITY = 0;
 	private int size;
 	private Node<?> first, last;
 
@@ -14,17 +18,29 @@ public class PriorityGenericQueue <T>
 		first = null;
 		last = null;
 	}
-	public PriorityGenericQueue(int priority, T value)
+	public PriorityGenericQueue(T value)
 	{
 		size = 1;
-		first = new Node(value);
+		first = new Node<T>(value, BASE_PRIORITY, null);
+		first.setPrevious(null);
+		last = first;
+	}
+	public PriorityGenericQueue(T value, int priority)
+	{
+		size = 1;
+		first = new Node<T>(value, priority, null);
+		first.setPrevious(null);
 		last = first;
 	}
 	public int getSize()
 	{
 		return size;
 	}
-	public void enqueue(int priority, T value)
+	public boolean isEmpty()
+	{
+		return (size == 0);
+	}
+	public void enqueue(T value, int priority)
 	{
 		if(last != null)
 		{
@@ -33,24 +49,39 @@ public class PriorityGenericQueue <T>
 			if(priority > first.getPriority())
 			{
 				node.setNext(first);
+				first.setPrevious(node);
+				node.setPrevious(null);
 				first = node;
 			}
 			else if(priority < last.getPriority())
 			{
 				node.setPrevious(last);
+				last.setNext(node);
 				last = node;
 			}
 			else
 			{
 				Node<?> foundNode = findPriority(priority);
-				node.setPrevious(foundNode);
-				node.setNext(foundNode.getNext());
-				foundNode.setNext(node);
+				
+				if(foundNode.getNext() == null)
+				{
+					foundNode.setNext(node);
+					node.setPrevious(foundNode);
+					node.setNext(null);
+					last = node;
+				}
+				else
+				{
+					node.setPrevious(foundNode);
+					node.setNext(foundNode.getNext());
+					foundNode.setNext(node);
+				}
 			}
 		}
 		else
 		{
-			last = new Node<T>(value);
+			last = new Node<T>(value, priority, null);
+			last.setPrevious(null);
 			first = last;
 		}
 		size++;
@@ -58,8 +89,9 @@ public class PriorityGenericQueue <T>
 	private Node<?> findPriority(int priority)
 	{
 		Node<?> node;
+		int midpoint = first.getPriority();
 		
-		if(priority <= 0)
+		if(priority <= midpoint)
 		{
 			node = last;
 			while(node.getPriority() < priority)
@@ -70,7 +102,7 @@ public class PriorityGenericQueue <T>
 		else
 		{
 			node = first;
-			while(node.getPriority() > priority)
+			while(node.getPriority() >= priority && node.getNext() != null)
 			{
 				node = node.getNext();
 			}
@@ -81,7 +113,7 @@ public class PriorityGenericQueue <T>
 	{
 		for(int i = 0; i < array.length; i++)
 		{
-			this.enqueue(priority, array[i]);
+			this.enqueue(array[i], priority);
 		}
 	}
 	@SuppressWarnings("unchecked")
@@ -122,39 +154,59 @@ public class PriorityGenericQueue <T>
 		else
 			throw new NullPointerException();
 	}
-	public void printQueue()
+	public void printQueue(PrintStream printStream)
 	{
 		Node<?> node = first;
 		for(int i = 0; i < size; i++)
 		{
-			System.out.println("Value: " + node.getValue() + " Priority: " + node.getPriority() + " Size: " + size);
+			printStream.println("Value: " + node.getValue() + " Priority: " + node.getPriority() + " Size: " + size);
 			node = node.getNext();
 			if(node == null)
 			{
 				break;
 			}
 		}
-		System.out.println("Value: " + last.getValue() + " Priority: " + last.getPriority() + " Size: " + size);
+		printStream.close();
 	}
-	public String toString()
+	public String toString(boolean addSpacing)
     {
        StringBuilder stringBuilder = new StringBuilder();
        
        // Walk down the list and append all values
-       Node<?> p = first;
-       while (p != null)
+       Node<?> node = first;
+       
+       if(addSpacing == true)
        {
-           stringBuilder.append(p.value + " ");
-           p = p.next;
+    	   for(int i = 0; i < size; i++)
+           {
+               stringBuilder.append(node.getValue() + " ");
+               node = node.getNext();
+           }
        }
+       else
+       {
+    	   for(int i = 0; i < size; i++)
+           {
+               stringBuilder.append(node.getValue());
+               node = node.getNext();
+           }
+       }
+      
        return stringBuilder.toString();        
     }
-	class Node <T>
+	@SuppressWarnings("hiding")
+	class Node<T>
 	{
 		private T value;
 		private Node<?> next, previous;
 		private int priority;
 		
+		public Node()
+		{
+			next = null;
+			this.value = null;
+			this.priority = 0;
+		}
 		public Node(T value)
 		{
 			next = null;
@@ -164,16 +216,16 @@ public class PriorityGenericQueue <T>
 		}
 		public Node(T value, int priority)
 		{
+			this.value = value;
+			this.priority = priority;
+		}
+		public Node(T value, int priority, Node<?> next)
+		{
 			this.next = next;
 			this.value = value;
 			this.priority = priority;
 		}
-		public Node()
-		{
-			next = null;
-			this.value = null;
-			this.priority = 0;
-		}
+		
 		public void setValue(T value)
 		{
 			this.value = value;
@@ -182,19 +234,19 @@ public class PriorityGenericQueue <T>
 		{
 			return value;
 		}
-		public Node getNext()
+		public Node<?> getNext()
 		{
 			return next;
 		}
-		public void setNext(Node next)
+		public void setNext(Node<?> next)
 		{
 			this.next = next;
 		}
-		public void setPrevious(Node previous)
+		public void setPrevious(Node<?> previous)
 		{
 			this.previous = previous;
 		}
-		public Node getPrevious()
+		public Node<?> getPrevious()
 		{
 			return previous;
 		}

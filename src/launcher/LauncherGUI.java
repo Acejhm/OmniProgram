@@ -7,19 +7,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Calendar;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
+
 
 import launcher.menus.LauncherMenu;
 import utility.ReadConfig;
 
 public class LauncherGUI extends JFrame
 {
+	private static final long serialVersionUID = 2201843583433517426L;
+	
 	private JPanel mainPanel, textPanel, clockPanel;
 	private JLabel label, clock;
 	private ApplicationPanel applicationPanel;
@@ -102,7 +99,7 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				calendar = calendar.getInstance();
+				calendar = Calendar.getInstance();
 				clock.setText("" + calendar.getTime());
 				clock.repaint();
 			}
@@ -139,7 +136,17 @@ public class LauncherGUI extends JFrame
 	public void dispose() 
 	{
 		timer.stop();
-		super.dispose();
+		
+		byte option = (byte)JOptionPane.showConfirmDialog(this, "Exit all programs?", "Exit Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+		
+		if(option == JOptionPane.YES_OPTION)
+		{
+			System.exit(0);
+		}
+		else if(option == JOptionPane.NO_OPTION)
+		{
+			super.dispose();
+		}
 	}
 	public static void main(String[] args)
 	{
@@ -151,10 +158,9 @@ public class LauncherGUI extends JFrame
 				try
 				{
 					ReadConfig reader = new ReadConfig();
-
-
 					new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
-				} catch (IOException e)
+				}
+				catch (IOException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();

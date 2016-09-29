@@ -15,6 +15,7 @@ import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import applications.menus.ColorChooserMenu;
 import utility.MathExtended;
 
 /**
@@ -22,8 +23,8 @@ import utility.MathExtended;
  */
 public class ColorChooser extends JFrame implements ChangeListener
 {
-	protected JColorChooser advancedChooser;
-	protected JPanel mainPanel;
+	public JColorChooser advancedChooser;
+	public JPanel mainPanel;
 	
 	private JPanel colorPanel, sliderPanel, infoPanel, controlPanel;
 	private JSlider redSlider, blueSlider, greenSlider;

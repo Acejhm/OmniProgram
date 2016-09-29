@@ -14,6 +14,7 @@ import utility.MathExtended;
  */
 public class ComputerSpecs extends JFrame
 {
+	private static final long serialVersionUID = 5831990538109414355L;
 	private static final short	WINDOW_LENGTH	 = 400;
 	private static final short	WINDOW_WIDTH	 = 400;
 	private static final String	TITLE			 = "Computer Specifications";

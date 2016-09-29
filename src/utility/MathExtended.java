@@ -2,6 +2,9 @@ package utility;
 
 import java.util.ArrayList;
 
+import org.mariuszgromada.math.mxparser.Argument;
+import org.mariuszgromada.math.mxparser.Expression;
+
 /**
  * @author Jackson Murrell on Oct 16, 2015
  */
@@ -9,6 +12,7 @@ public final class MathExtended
 {
 	final static char PI_SYMBOL = '\u03C0';
 	final static double BYTE_CONVERION = 1024.0;
+	private static Expression equation = new Expression();
 	/**
 	 * Converts the given value of bytes into Gigabytes.
 	 * @param bytes
@@ -46,8 +50,12 @@ public final class MathExtended
 		while(divisor < input);
 		return output;
 	}
+	public static double arcLengthXAxis(String function, double a, double b)
+	{
+		return new Expression("int(sqrt(1+(" + function + ")^2)), x, a, b").calculate();
+	}
 	/**
-	 * Used internally
+	 * Used internally for Riemman Sums
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
@@ -67,12 +75,8 @@ public final class MathExtended
 	public static double leftRiemannSum(double a, double b, int n)
 	{
 		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a,b,n);
 		double answer = 0;
-		for(int i = 0; i <= n; i++)
-		{
-			gridPoints[i] = a+(i*deltaX);
-		}
 		for(int i = 0; i < n; i++)
 		{
 			answer += deltaX*equation(gridPoints[i]);
@@ -88,18 +92,13 @@ public final class MathExtended
 	 */
 	public static double rightRiemannSum(double a, double b, int n)
 	{
-		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
-		for(int i = 0; i <= n; i++)
-		{
-			gridPoints[i] = a+(i*deltaX);
-		}
 		for(int i = 1; i <= n; i++)
 		{
-			answer += deltaX*equation(gridPoints[i]);
+			answer += equation(gridPoints[i]);
 		}
-		return answer;
+		return deltaX(a,b,n)*answer;
 	}
 	/**
 	 * 
@@ -110,21 +109,57 @@ public final class MathExtended
 	 */
 	public static double midPointRiemannSum(double a, double b, int n)
 	{
-		double deltaX = deltaX(a,b,n);
-		double[] gridPoints = new double[n+1];
+		double[] gridPoints = gridPoints(a, b, n);
+		double answer = 0;
+		for(int i = 0; i < n; i++)
+		{
+			answer += equation((gridPoints[i]+gridPoints[i+1])/2);
+		}
+		return deltaX(a,b,n)*answer;
+	}
+	public static double trapezoidSum(double a, double b, int n)
+	{
+		double[] gridPoints = gridPoints(a, b, n);
 		double answer = 0;
 		for(int i = 0; i <= n; i++)
 		{
-			gridPoints[i] = a+(i*deltaX);
+			if(i==0 || i==n)
+				answer += equation(gridPoints[i]);
+			else
+				answer += 2*equation(gridPoints[i]);
 		}
-		for(int i = 0; i < n; i++)
-		{
-			answer += deltaX*equation((gridPoints[i]+gridPoints[i+1])/2);
-		}
-		return answer;
+		return (deltaX(a,b,n)*0.5)*answer;
+	}
+	public static double simpsonsSum(double a, double b, int n)
+	{
+		if((n % 2)!= 0)
+			throw new NumberFormatException("The interval must be an even number for " +
+											"Simpson's Method.");
+		double[] gridPoints = gridPoints(a, b, n);
+		double answer = 0;
+		boolean bool = true;
+		for(int i = 0; i <= n; i++)
+		{	System.out.println("Gridpoint " + i + ":" + gridPoints[i]);
+			if(i == 0 || i ==n)
+				answer += equation(gridPoints[i]);
+			else
+			{
+				if(bool == true)
+				{
+					answer += 4*equation(gridPoints[i]);
+					bool = false;
+				}
+				else
+				{
+					answer += 2*equation(gridPoints[i]);
+					bool = true;
+				}
+			}
+		};
+		return (deltaX(a,b,n)*(1.0/3))*answer;
 	}
 	/**
-	 * Used internally
+	 * Used internally to get the x-values for summations
 	 * @param a First point
 	 * @param b Second point
 	 * @param n The number of iterations/rectangles
@@ -132,7 +167,9 @@ public final class MathExtended
 	 */
 	private static double[] gridPoints(double a, double b, int n)
 	{
+		System.out.println("a: " + a + " b: " + b + " n: " + n);
 		double deltaX = deltaX(a,b,n);
+		System.out.println("DeltaX: " + deltaX);
 		double[] gridPoints = new double[n+1];
 		for(int i = 0; i <= n; i++)
 		{
@@ -159,14 +196,20 @@ public final class MathExtended
 		}
 		return answer;
 	}
+	public static void setEquation(String expression)
+	{
+		equation = new Expression(expression);
+	}
 	/**
 	 * @param d
 	 * @return
 	 * @return int
 	 */
-	public static double equation(double x)
+	private static double equation(double xValue)
 	{
-		return (x+1);
+		Argument x = new Argument("x", xValue);
+		equation = new Expression(equation.getExpressionString(), x);
+		return equation.calculate();
 	}
 	/**
 	 * Currently broken
