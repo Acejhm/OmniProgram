@@ -62,7 +62,7 @@ public class LauncherGUI extends JFrame
         if(widgetsOn)
         	addClock();
 
-       setJMenuBar(new LauncherMenu(this, true));
+       setJMenuBar(new LauncherMenu(this, new ReadConfig()));
         
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
@@ -150,21 +150,14 @@ public class LauncherGUI extends JFrame
 	}
 	public static void main(String[] args)
 	{
-		SwingUtilities.invokeLater(new Runnable()
+		SwingUtilities.invokeLater(
+		new Runnable()
 		{
 			@Override
 			public void run() 
 			{
-				try
-				{
-					ReadConfig reader = new ReadConfig();
-					new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				ReadConfig reader = new ReadConfig();
+				new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
 			}
 		});
 	}

@@ -1,20 +1,15 @@
 package launcher;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import java.awt.event.*;
+import java.io.*;
 import javax.swing.*;
 
-import applications.Calculator;
-import applications.ColorChooser;
-import applications.ComputerSpecs;
-import applications.Sorter;
+import applications.*;
 
 public class ApplicationPanel extends JPanel implements ActionListener
 {
+	private static final long serialVersionUID = -1813652528709487354L;
+
 	JButton games, calculator, sorter, exit, chooser, chat, specs;
 	LauncherGUI launcher;
 	
@@ -72,7 +67,6 @@ public class ApplicationPanel extends JPanel implements ActionListener
 				new Calculator();
 			} catch (IOException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
