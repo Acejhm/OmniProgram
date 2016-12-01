@@ -14,7 +14,7 @@ public class ReadConfig
 	private Properties properties;
 	private static final String	FILE_PATH = "Omnia-Config.properties";
 
-	public ReadConfig() throws IOException
+	public ReadConfig()
 	{
 		try
 		{

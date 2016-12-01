@@ -8,6 +8,8 @@ import javax.swing.*;
 
 import launcher.LauncherGUI;
 import utility.BaseMenu;
+import utility.ConfigFile;
+import utility.ReadConfig;
 
 /**
  * @author Jackson Murrell onClock Nov 7, 2015
@@ -17,12 +19,15 @@ public class LauncherMenu extends BaseMenu implements ActionListener
 	private JMenuItem onClock, offClock, onLabel, offLabel;
 	private JMenu widgets, clock, text;
 	private LauncherGUI launcherGUI;
+	private ReadConfig config;
 	
-	public LauncherMenu(LauncherGUI gui, boolean widgetOn)
+	public LauncherMenu(LauncherGUI gui, boolean widgetsOn)
 	{
 		super(gui);
 		
 		launcherGUI = gui;
+		
+		this.config = config;
 		
 		onClock = new JMenuItem("On");
 		onClock.addActionListener(this);
@@ -33,7 +38,7 @@ public class LauncherMenu extends BaseMenu implements ActionListener
 		offLabel = new JMenuItem("Off");
 		offLabel.addActionListener(this);
 		
-		if(widgetOn)
+		if(config.readPropertyBool(ReadConfig.WIDGETS))
 		{
 			onClock.setEnabled(false);
 			offClock.setEnabled(true);
