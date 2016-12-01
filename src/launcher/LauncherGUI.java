@@ -159,16 +159,8 @@ public class LauncherGUI extends JFrame
 			@Override
 			public void run() 
 			{
-				try
-				{
-					ReadConfig reader = new ReadConfig();
-					new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				ReadConfig reader = new ReadConfig();
+				new LauncherGUI(true, reader.readPropertyBool(ReadConfig.WIDGETS));
 			}
 		});
 	}
