@@ -42,8 +42,8 @@ public class LauncherMenu extends BaseMenu implements ActionListener
 		}
 		else
 		{
-			offClock.setEnabled(true);
-			onClock.setEnabled(false);
+			onClock.setEnabled(true);
+			offClock.setEnabled(false);
 			onLabel.setEnabled(true);
 			offLabel.setEnabled(false);
 		}
@@ -77,8 +77,8 @@ public class LauncherMenu extends BaseMenu implements ActionListener
 		else if(action.getSource() == onLabel)
 		{
 			launcherGUI.addLabel();
-			offLabel.setEnabled(false);
-			onLabel.setEnabled(true);
+			offLabel.setEnabled(true);
+			onLabel.setEnabled(false);
 		}
 		else if(action.getSource() == offLabel)
 		{

@@ -49,10 +49,8 @@ public class LauncherGUI extends JFrame
         clock.setHorizontalAlignment(SwingUtilities.LEFT);
         
         clock.setBorder(BorderFactory.createRaisedBevelBorder());
-        
-        clockPanel.add(clock);
         textPanel.add(label);
-        mainPanel.add(textPanel);
+        clockPanel.add(clock);
         
         if(applicationDefault)
         	mainPanel.add(applicationPanel);
@@ -60,9 +58,13 @@ public class LauncherGUI extends JFrame
         	mainPanel.add(gamePanel);
         
         if(widgetsOn)
+        {
         	addClock();
+        	addLabel();
+        }
+        	
 
-       setJMenuBar(new LauncherMenu(this, true));
+       setJMenuBar(new LauncherMenu(this, widgetsOn));
         
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
@@ -135,7 +137,8 @@ public class LauncherGUI extends JFrame
 	@Override
 	public void dispose() 
 	{
-		timer.stop();
+		if(timer != null)
+			timer.stop();
 		
 		byte option = (byte)JOptionPane.showConfirmDialog(this, "Exit all programs?", "Exit Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 		
