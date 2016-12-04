@@ -19,21 +19,21 @@ public class ApplicationPanel extends JPanel implements ActionListener
 		games = new JButton("Games");
 		exit = new JButton("Exit");
 		sorter = new JButton("Sorter");
-		calculator = new JButton("Calculator");
+		//calculator = new JButton("Calculator");
 		chooser = new JButton("Color Chooser");
-		chat = new JButton("Chat Room");
+		//chat = new JButton("Chat Room");
 		specs = new JButton("Computer Specifications");
 		
 		sorter.addActionListener(this);
-		calculator.addActionListener(this);
+		//calculator.addActionListener(this);
 		games.addActionListener(this);
 		exit.addActionListener(this);
 		chooser.addActionListener(this);
-		chat.addActionListener(this);
+		//chat.addActionListener(this);
 		specs.addActionListener(this);
 		
-		add(calculator);
-		add(chat);
+		//add(calculator);
+		//add(chat);
 		add(chooser);
 		add(specs);
 		add(sorter);
